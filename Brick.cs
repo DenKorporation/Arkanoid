@@ -1,13 +1,12 @@
 ﻿namespace Arkanoid;
 
-public class Button : DisplayObject
+public class Brick : DisplayObject
 {
-    public delegate void BtnAction();
-    
-    protected Label _btnContent;
-    protected BtnAction _btnAction;
+    private int _healthPoint;
+    private bool _isDestroyed;
+    private BonusItems _bonusItems;
 
-    public void OnClickedAction()
+    public void TakeHit(int hit)
     {
         throw new NotImplementedException();
     }

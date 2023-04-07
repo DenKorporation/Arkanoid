@@ -1,32 +1,32 @@
 ﻿namespace Arkanoid;
 
-public class Menu
+public class Label : DisplayObject
 {
-    private MenuItem[] _menuItems;
+    private String text;
+    private int size;
 
-    private bool isOpen()
+    public void Show()
     {
         throw new NotImplementedException();
     }
 
-    public void addMenuItem()
-    {
-        throw new NotImplementedException();
-    }
-
-    public void removeMenuItem()
-    {
-        throw new NotImplementedException();
-    }
-
-    public void Open()
-    {
-        throw new NotImplementedException();
-    }
-
-    public void Close()
+    public void Hide()
     {
         throw new NotImplementedException();
     }
     
+    public override void Update()
+    {
+        throw new NotImplementedException();
+    }
+
+    public override void Collision()
+    {
+        throw new NotImplementedException();
+    }
+
+    public override void Draw()
+    {
+        throw new NotImplementedException();
+    }
 }

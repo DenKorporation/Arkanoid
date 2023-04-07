@@ -8,8 +8,14 @@ public class Game
     
     public void Run()
     {
+        
     }
 
+    public void Update()
+    {
+        
+    }
+    
     public void SaveGame()
     {
     }
@@ -17,8 +23,9 @@ public class Game
     public void LoadGame()
     {
     }
-    
-    private void Draw()
+
+    public void PauseGame()
     {
+        
     }
 }

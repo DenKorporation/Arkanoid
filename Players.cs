@@ -2,15 +2,15 @@
 
 public class Players
 {
-    private List<Player> _players;
+    private Player[] _players;
 
-    public void DeletePlayer(int playerId)
+    public void RemovePlayer(int playerId)
     {
         throw new NotImplementedException();
     }
 
     //return id of the created Player
-    public int AddPlayer(String Name)
+    public void AddPlayer(String Name)
     {
         throw new NotImplementedException();
     }

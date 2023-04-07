@@ -7,15 +7,16 @@ public class Player
     private Statistics _statistics;
     private String _name;
 
+    private Platform _platform;
+
     public Statistics GetStatistics()
     {
         throw new NotImplementedException();
     }
 
-    public void ChangeName(string newName)
+    public void ProccessGameAction()
     {
         throw new NotImplementedException();
     }
-    
-    
+
 }

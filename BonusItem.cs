@@ -1,17 +1,14 @@
 ﻿namespace Arkanoid;
 
-public class Button : DisplayObject
+public class BonusItem : DisplayObject
 {
-    public delegate void BtnAction();
-    
-    protected Label _btnContent;
-    protected BtnAction _btnAction;
-
-    public void OnClickedAction()
+    private Label _content;
+    public enum Type
     {
-        throw new NotImplementedException();
+        
     }
-
+    private Type _type;
+    private int _value;
     public override void Update()
     {
         throw new NotImplementedException();

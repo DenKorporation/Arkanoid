@@ -2,21 +2,34 @@
 
 public class GameField
 {
-    public float Width { get; set; }
-    public float Height { get; set; }
+    public int Width { get; set; }
+    public int Height { get; set; }
 
-    private List<DisplayObject> _staticObjects;
-    private List<DisplayObject> _dynamicObjects;
+    private DisplayContainer AllObjects;
+    private DisplayContainer _staticObjects;
+    private DisplayContainer _dynamicObjects;
 
-    private void MoveObject(long elapsedMillisecond)
+    private Platforms _platforms;
+    private Bricks _bricks;
+    private Menu _menu;
+    private Balls _balls;
+    private MessageBox _messageBox;
+    private BonusItems _bonusItems;
+    private StatusBar _statusBar;
+
+    
+    public void Draw()
+    {}
+    
+    public void MoveObject(long elapsedMillisecond)
     {
     }
 
-    private void CheckCollisons()
+    public void CheckCollisons()
     {
     }
 
-    private void HandleCollison()
+    public void HandleCollison()
     {
     }
     

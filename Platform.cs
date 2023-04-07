@@ -1,17 +1,7 @@
 ﻿namespace Arkanoid;
 
-public class Button : DisplayObject
+public class Platform : DisplayObject
 {
-    public delegate void BtnAction();
-    
-    protected Label _btnContent;
-    protected BtnAction _btnAction;
-
-    public void OnClickedAction()
-    {
-        throw new NotImplementedException();
-    }
-
     public override void Update()
     {
         throw new NotImplementedException();
