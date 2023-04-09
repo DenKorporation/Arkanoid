@@ -1,19 +1,55 @@
-﻿namespace Arkanoid;
+﻿using SFML.Graphics;
+using SFML.System;
+
+namespace Arkanoid;
 
 public class Platform : DisplayObject
 {
-    public override void Update()
+
+    private RectangleShape _shape;
+
+    public override Color ForeGroundColor
     {
-        throw new NotImplementedException();
+        get
+        {
+            return _shape.FillColor;
+        }
+        set
+        {
+            _shape.FillColor = value;
+        }
     }
 
-    public override void Collision()
+    public override Color BackGroundColor
     {
-        throw new NotImplementedException();
+        get
+        {
+            return _shape.OutlineColor;
+        }
+        set
+        {
+            _shape.OutlineColor = value;
+        }
     }
 
-    public override void Draw()
+    public Platform(Vector2f size)
     {
-        throw new NotImplementedException();
+        isStaticObject = false;
+        _shape = new RectangleShape(size);
+        ForeGroundColor = Color.White;
+        Point1 -= size / 2f;
+        Point2 += size / 2f;
+        _shape.Origin = size / 2f;
+    }
+
+    public override void Update(Time elapsedTime)
+    {
+        Move(elapsedTime);
+    }
+
+    public override void Draw(RenderTarget target, RenderStates states)
+    {
+        states.Transform *= Transform;
+        target.Draw(_shape, states);
     }
 }

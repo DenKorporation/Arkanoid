@@ -2,12 +2,9 @@
 
 public class Menu
 {
-    private MenuItem[] _menuItems;
-
-    private bool isOpen()
-    {
-        throw new NotImplementedException();
-    }
+    private List<MenuItem> _menuItems;
+    
+    public bool isOpen { get; set; }
 
     public void addMenuItem()
     {

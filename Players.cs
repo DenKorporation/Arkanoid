@@ -1,19 +1,39 @@
-﻿namespace Arkanoid;
+﻿using System.Reflection;
+using SFML.Window;
+
+namespace Arkanoid;
 
 public class Players
 {
-    private Player[] _players;
+    private List<Player> _players = new();
+    public event EventHandler<KeyEventArgs> KeyPressed = null;
+    public event EventHandler<KeyEventArgs> KeyReleased = null;
 
-    public void RemovePlayer(int playerId)
+    public Players()
     {
-        throw new NotImplementedException();
     }
 
-    //return id of the created Player
-    public void AddPlayer(String Name)
+    public void AddPlayer(Player player)
     {
-        throw new NotImplementedException();
+        _players.Add(player);
+        KeyPressed += player.OnKeyPressed;
+        KeyReleased += player.OnKeyReleased;
     }
     
-    
+    public bool RemovePlayer(Player player)
+    {
+        return _players.Remove(player);
+    }
+
+    public void OnKeyPressed(object? sender, KeyEventArgs e)
+    {
+        Console.WriteLine(GetType() + ":" + MethodInfo.GetCurrentMethod().Name);
+        KeyPressed(sender, e);
+    }
+
+    public void OnKeyReleased(object? sender, KeyEventArgs e)
+    {
+        Console.WriteLine(GetType() + ":" + MethodInfo.GetCurrentMethod().Name);
+        KeyReleased(sender, e);
+    }
 }

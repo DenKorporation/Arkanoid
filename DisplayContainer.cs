@@ -1,16 +1,36 @@
-﻿namespace Arkanoid;
+﻿using SFML.Graphics;
+using SFML.System;
 
-public class DisplayContainer
+namespace Arkanoid;
+
+public class DisplayContainer : Transformable, Drawable
 {
-    private DisplayObject[] _objects;
+    public List<DisplayObject> Objects = new();
 
-    public void AddDisplayObject()
+    public void AddDisplayObject(DisplayObject obj)
     {
-        throw new NotImplementedException();
+        Objects.Add(obj);
     }
 
-    public void RemoveDisplayObject()
+    public void Update(Time elapsedTime)
     {
-        throw new NotImplementedException();
+        foreach (var obj in Objects)
+        {
+            obj.Update(elapsedTime);
+        }
+    }
+
+    public bool RemoveDisplayObject(DisplayObject obj)
+    {
+        return Objects.Remove(obj);
+    }
+
+    public void Draw(RenderTarget target, RenderStates states)
+    {
+        states.Transform *= Transform;
+        foreach (var obj in Objects)
+        {
+            target.Draw(obj,states);
+        }
     }
 }

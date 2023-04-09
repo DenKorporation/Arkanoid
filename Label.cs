@@ -1,4 +1,7 @@
-﻿namespace Arkanoid;
+﻿using SFML.Graphics;
+using SFML.System;
+
+namespace Arkanoid;
 
 public class Label : DisplayObject
 {
@@ -14,18 +17,16 @@ public class Label : DisplayObject
     {
         throw new NotImplementedException();
     }
-    
-    public override void Update()
+
+    public override Color ForeGroundColor { get; set; }
+    public override Color BackGroundColor { get; set; }
+
+    public override void Update(Time elapsedTime)
     {
         throw new NotImplementedException();
     }
 
-    public override void Collision()
-    {
-        throw new NotImplementedException();
-    }
-
-    public override void Draw()
+    public override void Draw(RenderTarget target, RenderStates states)
     {
         throw new NotImplementedException();
     }

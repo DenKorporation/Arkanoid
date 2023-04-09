@@ -2,12 +2,15 @@
 
 public class BonusItems
 {
-    private BonusItem[] _bonusItems;
+    private List<BonusItem> _bonusItems;
 
     public void AddBonusItem()
     {
+        throw new NotImplementedException();
     }
-    
+
     public void RemoveBonusItem()
-    {}
+    {
+        throw new NotImplementedException();
+    }
 }

@@ -2,13 +2,15 @@
 
 public class Platforms
 {
-    private Platform[] _platforms;
+    private List<Platform> _platforms = new ();
 
-    public void AddPlatform()
+    public void AddPlatform(Platform platform)
     {
+        _platforms.Add(platform);
     }
 
-    public void RemovePlatform()
+    public bool RemovePlatform(Platform platform)
     {
+        return _platforms.Remove(platform);
     }
 }

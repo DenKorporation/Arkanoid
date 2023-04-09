@@ -2,29 +2,28 @@
 
 public class Bricks
 {
-    private Brick[,] _fieldBricks;
-
-    private int _rowNumbers;
-    private int _columnNumbers;
-    
+    public Brick[,] FieldBricks;
     private BonusItems _bonusItems;
 
-    public void Initialize()
+    public int RowNumbers
     {
-        throw new NotImplementedException();
+        get
+        {
+            return FieldBricks.GetLength(0);
+        }
     }
 
-    public bool isEmpty()
+    public int _columnNumbers
     {
-        throw new NotImplementedException();
+        get
+        {
+            return FieldBricks.GetLength(1);
+        }
     }
 
-    public Brick[,] GetBricks()
+
+    public Bricks(int rowNumbers, int columnNumbers)
     {
-        throw new NotImplementedException();
-    }
-    public void Remove(Brick brick)
-    {
-        throw new NotImplementedException();
+        FieldBricks = new Brick[rowNumbers, columnNumbers];
     }
 }

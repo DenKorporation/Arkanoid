@@ -1,45 +1,69 @@
-﻿using System.Drawing;
-using System.Numerics;
+﻿using SFML.Graphics;
+using SFML.System;
 
 namespace Arkanoid;
 
-public struct Point
+public abstract class DisplayObject : Transformable, Drawable
 {
-    public int X;
-    public int Y;
-}
-
-public abstract class DisplayObject
-{
-    protected Point RefPoint { get; set; }
-    protected int X1 { get; set; }
-    protected int Y1 { get; set; }
-    protected int X2 { get; set; }
-    protected int Y2 { get; set; }
-    public Color ForeGroundColor { get; set; }
-    public Color BackGroundColor { get; set; }
-    protected byte IsVisible { get; set; }
-    protected bool IsDestroyable { get; init; }
-    public Vector2 Velocity;
-
-    public bool isStaticObject { get; set; }
+    private Vector2f _refPoint;
+    
+    public Vector2f RefPoint
+    {
+        get
+        {
+            return _refPoint;
+        }
+        set
+        {
+            Vector2f delta = value - _refPoint;
+            Point1 += delta;
+            Point2 += delta;
+            Position = value;
+            _refPoint = value;
+        }
+    }
+    public Vector2f Point1 { get; set; }
+    public Vector2f Point2 { get; set; }
+    
+    public abstract Color ForeGroundColor { get; set; }
+    public abstract Color BackGroundColor { get; set; }
+    public bool IsVisible { get; set; } = true;
+    public bool IsDestroyable { get; init; } = false;
+    
+    public bool isStaticObject { get; set; } = true;
+    
+    public Vector2f Velocity { get; set; }
 
     public float Height
     {
-        get;
+        get
+        {
+            return Point2.Y - Point1.Y;
+        }
     }
 
     public float Width
     {
-        get;
+        get
+        {
+            return Point2.X - Point1.X;
+        }
     }
 
-    public abstract void Update();
-    public abstract void Collision();
-    public abstract void Draw();
+    public abstract void Update(Time elapsedTime);
 
-    public void Move(long elapsedMilliseconds)
+    public bool CheckCollision(DisplayObject obj) => (Point1.Y >= obj.Point2.Y && Point2.Y <= obj.Point1.Y) &&
+                                                (Point1.X <= obj.Point2.X && Point2.X >= obj.Point1.X);
+
+    public virtual void HandleCollison(DisplayObject obj)
     {
-        throw new NotImplementedException();
     }
+    
+
+    public void Move(Time elapsedTime)
+    {
+        RefPoint += Velocity * elapsedTime.AsSeconds();
+    }
+
+    public abstract void Draw(RenderTarget target, RenderStates states);
 }

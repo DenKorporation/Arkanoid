@@ -2,17 +2,27 @@
 
 public class Balls
 {
-    private Ball[] _balls;
+    private List<Ball> _balls = new ();
 
-    public void addBall(Ball ball)
+    public void AddBall(Ball ball)
     {
-        throw new NotImplementedException();
+        _balls.Add(ball);
     }
 
-    public void removeBall(Ball ball)
+    public bool RemoveBall(Ball ball)
     {
-        throw new NotImplementedException();
+        return _balls.Remove(ball);
     }
-    
+
+    public bool LaunchBall()
+    {
+        if (_balls.Count == 1)
+        {
+            _balls[0].Launch();
+            return true;
+        }
+
+        return false;
+    }
     
 }

@@ -2,9 +2,9 @@
 
 public class StatusBar
 {
-    private Label[] _labels;
+    private List<Label> _labels;
 
-    private Button[] _buttons;
+    private List<Button> _buttons;
     
     private Statistics _stat;
 
