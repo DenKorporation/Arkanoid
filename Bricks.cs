@@ -1,29 +1,55 @@
-﻿namespace Arkanoid;
+﻿using SFML.System;
+
+namespace Arkanoid;
 
 public class Bricks
 {
-    public Brick[,] FieldBricks;
-    private BonusItems _bonusItems;
+    public event EventHandler<EventArgs>? Cleared; 
+    public Brick?[,]? FieldBricks { get; set; }
 
-    public int RowNumbers
+    public int RowNumbers => FieldBricks?.GetLength(0)?? -1;
+
+    public int ColumnNumbers => FieldBricks?.GetLength(1) ?? -1;
+
+    private int _destroyableCount { get; set; } = -1;
+    private int DestroyableCount
     {
-        get
+        get => _destroyableCount;
+        set
         {
-            return FieldBricks.GetLength(0);
+            _destroyableCount = value;
+            if (_destroyableCount == 0)
+            {
+                Cleared?.Invoke(this, EventArgs.Empty);
+            }
         }
     }
 
-    public int _columnNumbers
-    {
-        get
-        {
-            return FieldBricks.GetLength(1);
-        }
-    }
-
-
-    public Bricks(int rowNumbers, int columnNumbers)
+    public void SetConfiguration(int rowNumbers, int columnNumbers, int destroyableCount)
     {
         FieldBricks = new Brick[rowNumbers, columnNumbers];
+        DestroyableCount = destroyableCount;
+    }
+
+    public bool RemoveBrick(Brick brick)
+    {
+        for (int i = 0; i < FieldBricks?.GetLength(0); i++)
+        {
+            for (int j = 0; j < FieldBricks?.GetLength(1); j++)
+            {
+                if (FieldBricks[i, j] == brick)
+                {
+                    FieldBricks[i, j] = null;
+                    DestroyableCount--;
+
+                    brick.BonusItem.Velocity = new Vector2f(0f, BonusItem.BonusVelocity);
+                    brick.BonusItem.IsActive = true;
+                    brick.BonusItem = null;
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 }

@@ -2,15 +2,6 @@
 
 public class BonusItems
 {
-    private List<BonusItem> _bonusItems;
-
-    public void AddBonusItem()
-    {
-        throw new NotImplementedException();
-    }
-
-    public void RemoveBonusItem()
-    {
-        throw new NotImplementedException();
-    }
+    public List<BonusItem> BonusList { get; set; }= new ();
+    
 }

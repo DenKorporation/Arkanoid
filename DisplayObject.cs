@@ -1,18 +1,18 @@
 ﻿using SFML.Graphics;
 using SFML.System;
+using SFML.Window;
 
 namespace Arkanoid;
 
 public abstract class DisplayObject : Transformable, Drawable
 {
+    public event EventHandler<CollisionEventArgs>? Collision;
+
     private Vector2f _refPoint;
     
     public Vector2f RefPoint
     {
-        get
-        {
-            return _refPoint;
-        }
+        get => _refPoint;
         set
         {
             Vector2f delta = value - _refPoint;
@@ -52,12 +52,29 @@ public abstract class DisplayObject : Transformable, Drawable
 
     public abstract void Update(Time elapsedTime);
 
-    public bool CheckCollision(DisplayObject obj) => (Point1.Y >= obj.Point2.Y && Point2.Y <= obj.Point1.Y) &&
-                                                (Point1.X <= obj.Point2.X && Point2.X >= obj.Point1.X);
+    public bool CheckCollision(GameField? gameField, DisplayObject? obj)
+    {
+        if (gameField is not null)
+        {
+            return Point1.X < 0 || Point1.Y < 0 || Point2.X > gameField.Width || Point2.Y > gameField.Height;
+        }
+        else if (obj is not null)
+        {
+            return (Point1.Y <= obj.Point2.Y && Point2.Y >= obj.Point1.Y) &&
+                (Point1.X <= obj.Point2.X && Point2.X >= obj.Point1.X);
+        }
+        else
+        {
+            return false;
+        }
+    }
 
-    public virtual void HandleCollison(DisplayObject obj)
+    public virtual void HandleCollision(object? sender, CollisionEventArgs args)
     {
     }
+    
+    public abstract String Serialize();
+    public abstract DisplayObject Deserialize(String str);
     
 
     public void Move(Time elapsedTime)
@@ -66,4 +83,9 @@ public abstract class DisplayObject : Transformable, Drawable
     }
 
     public abstract void Draw(RenderTarget target, RenderStates states);
+
+    public void OnCollision(CollisionEventArgs e)
+    {
+        Collision?.Invoke(this, e);
+    }
 }

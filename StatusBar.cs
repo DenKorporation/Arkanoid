@@ -1,20 +1,57 @@
-﻿namespace Arkanoid;
+﻿using SFML.Graphics;
+using SFML.Window;
 
-public class StatusBar
+namespace Arkanoid;
+
+public class StatusBar : Transformable, Drawable
 {
-    private List<Label> _labels;
+    public event EventHandler<MouseButtonEventArgs> MouseClicked;
+    public event EventHandler<MouseMoveEventArgs> MouseMoved;
 
-    private List<Button> _buttons;
-    
-    private Statistics _stat;
-
-    void Show()
+    public void OnMouseClicked(object? sender, MouseButtonEventArgs args)
     {
-        throw new NotImplementedException();
+        MouseClicked?.Invoke(sender, args);
     }
 
-    void Hide()
+    public void OnMouseMoved(object? sender, MouseMoveEventArgs args)
     {
-        throw new NotImplementedException();
+        MouseMoved?.Invoke(sender, args);
+    }
+
+    public List<Label> Labels = new();
+
+    public List<Button> Buttons = new();
+
+    public void AddButton(Button btn)
+    {
+        Buttons.Add(btn);
+        MouseClicked += btn.OnMouseClicked;
+        MouseMoved += btn.OnMouseMoved;
+    }
+
+    public void Clear()
+    {
+        foreach (var btn in Buttons)
+        {
+            MouseClicked -= btn.OnMouseClicked;
+            MouseMoved -= btn.OnMouseMoved;
+        }
+
+        Buttons.Clear();
+        Labels.Clear();
+    }
+
+    public void Draw(RenderTarget target, RenderStates states)
+    {
+        states.Transform *= Transform;
+        foreach (var label in Labels)
+        {
+            target.Draw(label, states);
+        }
+
+        foreach (var button in Buttons)
+        {
+            target.Draw(button, states);
+        }
     }
 }

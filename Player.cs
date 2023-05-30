@@ -1,56 +1,58 @@
-﻿using System.Reflection;
-using SFML.System;
+﻿using SFML.System;
 using SFML.Window;
 
 namespace Arkanoid;
 
-public class Player
+public class Player : IComparable
 {
-    private const float PlayerVelocity = 500f;
+    public static float PlayerVelocity = 500f;
+    
+    public string Name { get; set; }
 
-    public string Id { get; }
-    public string Name { get; }
+    public Statistics Statistics { get; } = new ();
 
-    public Statistics Statistics { get; }
-
-    public Platform Platform { get; set; }
+    public Platform? Platform { get; set; }
 
     public Player(string name)
     {
-        Id = Guid.NewGuid().ToString();
         Name = name;
-    }
-
-    public void ProccessGameAction()
-    {
-        throw new NotImplementedException();
     }
 
     public void OnKeyPressed(object? sender, KeyEventArgs e)
     {
-        Console.WriteLine(GetType() + ":" + MethodInfo.GetCurrentMethod().Name);
-        switch (e.Code)
+        if (Platform is not null)
         {
-            case Keyboard.Key.A:
-                Platform.Velocity += new Vector2f(-PlayerVelocity, 0);
-                break;
-            case Keyboard.Key.D:
-                Platform.Velocity += new Vector2f(PlayerVelocity, 0);
-                break;
+            switch (e.Code)
+            {
+                case Keyboard.Key.A:
+                    Platform.Velocity += new Vector2f(-PlayerVelocity, 0);
+                    break;
+                case Keyboard.Key.D:
+                    Platform.Velocity += new Vector2f(PlayerVelocity, 0);
+                    break;
+            }   
         }
     }
 
     public void OnKeyReleased(object? sender, KeyEventArgs e)
     {
-        Console.WriteLine(GetType() + ":" + MethodInfo.GetCurrentMethod().Name);
-        switch (e.Code)
+        if (Platform is not null)
         {
-            case Keyboard.Key.A:
-                Platform.Velocity += new Vector2f(PlayerVelocity, 0);
-                break;
-            case Keyboard.Key.D:
-                Platform.Velocity += new Vector2f(-PlayerVelocity, 0);
-                break;
+            switch (e.Code)
+            {
+                case Keyboard.Key.A:
+                    Platform.Velocity += new Vector2f(PlayerVelocity, 0);
+                    break;
+                case Keyboard.Key.D:
+                    Platform.Velocity += new Vector2f(-PlayerVelocity, 0);
+                    break;
+            }
         }
+    }
+
+    public int CompareTo(object? obj)
+    {
+        if (obj is Player player) return Statistics.BestScore.CompareTo(player.Statistics.BestScore);
+        else throw new ArgumentException();
     }
 }

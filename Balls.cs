@@ -2,27 +2,36 @@
 
 public class Balls
 {
-    private List<Ball> _balls = new ();
+    public List<Ball> BallsList { get; set; } = new ();
+
+    public int Length
+    {
+        get { return BallsList.Count; }
+    }
 
     public void AddBall(Ball ball)
     {
-        _balls.Add(ball);
+        BallsList.Add(ball);
     }
 
     public bool RemoveBall(Ball ball)
     {
-        return _balls.Remove(ball);
+        return BallsList.Remove(ball);
     }
 
+    public void Clear()
+    {
+        BallsList.Clear();
+    }
+    
     public bool LaunchBall()
     {
-        if (_balls.Count == 1)
+        if (Length == 1)
         {
-            _balls[0].Launch();
+            BallsList[0].Launch();
             return true;
         }
 
         return false;
     }
-    
 }
